@@ -1,6 +1,6 @@
 # Maintainer: Tu Nombre <tu@email.com>
 pkgname=fun-error
-pkgver=0.1.5
+pkgver=1.0.0_rc1
 pkgrel=1
 pkgdesc="Utilidad de terminal ultraligera con retroalimentación auditiva para Cortex"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://github.com/andexer/fun-error"
 license=('MIT')
 depends=('glibc')
 makedepends=('cargo' 'rust')
-source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v1.0.0-rc1.tar.gz")
 sha256sums=('SKIP') # Nota: Recuerda reemplazar SKIP con el hash real (makepkg -g)
 
 build() {
@@ -30,8 +30,7 @@ package() {
   # Instalar el binario ejecutable
   install -Dm755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
   
-  # Instalar hooks interactivos globales para Bash, Zsh y Fish
+  # Instalar hooks interactivos globales para Bash y Fish (Zsh integrado en Bash)
   install -Dm644 "conf/fun-error.fish" "$pkgdir/etc/fish/conf.d/fun-error.fish"
   install -Dm644 "conf/fun-error.bash" "$pkgdir/etc/profile.d/fun-error.sh"
-  install -Dm644 "conf/fun-error.zsh" "$pkgdir/etc/profile.d/fun-error.zsh"
 }

@@ -1,6 +1,6 @@
 [package]
 name = "fun-error"
-version = "0.1.6"
+version = "1.0.0-rc1"
 edition = "2024"
 description = "Una utilidad de terminal ultraligera con retroalimentación auditiva humorística"
 license = "MIT"
