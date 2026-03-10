@@ -1,4 +1,6 @@
-# Añade la retroalimentación de fun-error en Bash
+# Retroalimentación auditiva de fun-error para Bash y Zsh
+# Este archivo es cargado por /etc/profile.d/ en ambos shells
+
 __fun_error_hook() {
     local last_status=$?
     if [ $last_status -ne 0 ]; then
@@ -8,10 +10,15 @@ __fun_error_hook() {
     fi
 }
 
-# Verificamos si estamos en Bash para inyectar el hook seguro al comando de recarga
+# Bash: inyectar en PROMPT_COMMAND
 if [ -n "$BASH_VERSION" ]; then
-    # Para encadenar con un prompt existente de forma segura
     if [[ ! "$PROMPT_COMMAND" == *"__fun_error_hook"* ]]; then
         PROMPT_COMMAND="__fun_error_hook; $PROMPT_COMMAND"
     fi
+fi
+
+# Zsh: inyectar en precmd usando add-zsh-hook
+if [ -n "$ZSH_VERSION" ]; then
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd __fun_error_hook
 fi
