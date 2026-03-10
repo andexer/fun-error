@@ -1,0 +1,31 @@
+[package]
+name = "fun-error"
+version = "0.1.0"
+edition = "2024"
+description = "Una utilidad de terminal ultraligera con retroalimentación auditiva humorística"
+license = "MIT"
+repository = "https://github.com/andexer/fun-error"
+
+[dependencies]
+rodio = "0.19.0"
+
+# Optimización agresiva del binario de release
+[profile.release]
+opt-level = "z"       # Optimizar para tamaño mínimo
+lto = true            # Link-Time Optimization completo
+codegen-units = 1     # Máxima optimización (1 solo thread de compilación)
+panic = "abort"       # No incluir lógica de unwind (binario más pequeño)
+strip = true          # Eliminar símbolos de debug (anti-ingeniería inversa)
+
+[package.metadata.deb]
+maintainer = "andexer <tu@email.com>"
+copyright = "2026, andexer"
+extended-description = "Utilidad que provee retroalimentación auditiva instantánea en la terminal."
+depends = "$auto"
+section = "utility"
+priority = "optional"
+
+[package.metadata.generate-rpm]
+assets = [
+    { source = "target/release/fun-error", dest = "/usr/bin/fun-error", mode = "755" }
+]

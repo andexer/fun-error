@@ -1,0 +1,42 @@
+name: Release Cortex Utility
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies (ALSA)
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev pkg-config
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        
+      - name: Cargo Build Release
+        run: cargo build --release
+        
+      - name: Install Packaging Tools
+        run: cargo install cargo-deb cargo-generate-rpm
+        
+      - name: Generate Debian Package (.deb)
+        run: cargo deb
+        
+      - name: Generate RPM Package (.rpm)
+        run: cargo generate-rpm
+        
+      - name: Create Source Archive for Arch (PKGBUILD)
+        run: tar -czvf fun-error-${{ github.ref_name }}.tar.gz --exclude=target --exclude=.git src/ Cargo.toml Cargo.lock assets/ audio/ LICENSE README.md || true
+        
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/debian/*.deb
+            target/generate-rpm/*.rpm
+            fun-error-*.tar.gz
