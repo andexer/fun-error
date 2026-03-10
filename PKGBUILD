@@ -1,6 +1,6 @@
 # Maintainer: Tu Nombre <tu@email.com>
 pkgname=fun-error
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Utilidad de terminal ultraligera con retroalimentación auditiva para Cortex"
 arch=('x86_64')
