@@ -20,16 +20,3 @@ sudo dnf install fun-error-*.rpm
 ```bash
 sudo apt install ./fun-error_*.deb
 ```
-
-## Configuración en Fish
-
-Añade esto a `~/.config/fish/config.fish`:
-
-```fish
-function __fun_error_hook --on-event fish_postexec
-    set -l last_status $status
-    if test $last_status -ne 0
-        nice -n 19 /usr/bin/fun-error $last_status >/dev/null 2>&1 & disown
-    end
-end
-```

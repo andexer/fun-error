@@ -1,6 +1,6 @@
 [package]
 name = "fun-error"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Una utilidad de terminal ultraligera con retroalimentación auditiva humorística"
 license = "MIT"
@@ -18,14 +18,24 @@ panic = "abort"       # No incluir lógica de unwind (binario más pequeño)
 strip = true          # Eliminar símbolos de debug (anti-ingeniería inversa)
 
 [package.metadata.deb]
-maintainer = "andexer <tu@email.com>"
+maintainer = "andexer <arvelofalcon@gmail.com>"
 copyright = "2026, andexer"
 extended-description = "Utilidad que provee retroalimentación auditiva instantánea en la terminal."
 depends = "$auto"
 section = "utility"
 priority = "optional"
+assets = [
+    ["target/release/fun-error", "usr/bin/fun-error", "755"],
+    ["conf/fun-error.fish", "etc/fish/conf.d/fun-error.fish", "644"],
+    ["conf/fun-error.bash", "etc/profile.d/fun-error.sh", "644"],
+    ["conf/fun-error.zsh", "etc/profile.d/fun-error.zsh", "644"]
+]
 
 [package.metadata.generate-rpm]
 assets = [
-    { source = "target/release/fun-error", dest = "/usr/bin/fun-error", mode = "755" }
+    { source = "target/release/fun-error", dest = "/usr/bin/fun-error", mode = "755" },
+    { source = "conf/fun-error.fish", dest = "/etc/fish/conf.d/fun-error.fish", mode = "644" },
+    { source = "conf/fun-error.bash", dest = "/etc/profile.d/fun-error.sh", mode = "644" },
+    { source = "conf/fun-error.zsh", dest = "/etc/profile.d/fun-error.zsh", mode = "644" }
 ]
+

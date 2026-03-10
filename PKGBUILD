@@ -1,6 +1,6 @@
 # Maintainer: Tu Nombre <tu@email.com>
 pkgname=fun-error
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Utilidad de terminal ultraligera con retroalimentación auditiva para Cortex"
 arch=('x86_64')
@@ -30,10 +30,8 @@ package() {
   # Instalar el binario ejecutable
   install -Dm755 "target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
   
-  # Instalar la licencia
-  # install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-
-  # Aquí podríamos inyectar scripts de post-instalación (.install) o hooks para fish/zsh/bash,
-  # por ejemplo, si tienes un archivo de conf de fish:
-  # install -Dm644 "scripts/fun-error.fish" "$pkgdir/usr/share/fish/vendor_conf.d/fun-error.fish"
+  # Instalar hooks interactivos globales para Bash, Zsh y Fish
+  install -Dm644 "conf/fun-error.fish" "$pkgdir/etc/fish/conf.d/fun-error.fish"
+  install -Dm644 "conf/fun-error.bash" "$pkgdir/etc/profile.d/fun-error.sh"
+  install -Dm644 "conf/fun-error.zsh" "$pkgdir/etc/profile.d/fun-error.zsh"
 }
